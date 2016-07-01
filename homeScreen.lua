@@ -15,12 +15,41 @@ local scene = composer.newScene()
 function scene:create( event )
 
     local sceneGroup = self.view
+    
+    
 
     -- Initialize the scene here.
     -- Example: add display objects to "sceneGroup", add touch listeners, etc.
     
-    local myText = display.newText("Hi", 50,50, native.systemFontBold, 40)
-    composer.removeScene("firstscene")
+    runAgain = false
+    
+    
+	local backgroundImage=display.newImageRect("images/background.png", 820,1100)
+	backgroundImage.x=display.contentCenterX - 25
+	backgroundImage.y=display.contentCenterY
+	sceneGroup:insert(backgroundImage)
+	
+	local button=display.newImageRect("images/homebutton.png", 550, 130)
+	button.x=display.contentCenterX
+	button.y=870
+	sceneGroup:insert(button)
+	
+	function changeScene (event)
+	 	function sceneMove (event)
+	 	
+	 		local options =
+			{
+   				 effect = "slideLeft",
+    			 time = 800,
+   				
+			}
+	 		composer.gotoScene("firstscene", options)
+	 	end
+		timer.performWithDelay(10,sceneMove)
+	end
+	
+	button:addEventListener("touch", changeScene)
+	
 end
 
 
@@ -29,6 +58,8 @@ function scene:show( event )
 
     local sceneGroup = self.view
     local phase = event.phase
+
+	composer.removeScene ("completeScreen")
 
     if ( phase == "will" ) then
         -- Called when the scene is still off screen (but is about to come on screen).
